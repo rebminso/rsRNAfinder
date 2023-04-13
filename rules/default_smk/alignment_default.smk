@@ -2,10 +2,7 @@
 #     Alignment of fastq file to user-defined indexed genome using segmehel.
 #       """""""""""""""""""""""""""""""""""""""""""""""""""""
 
-rule user-defined_align_to_genomee:
-    """
-    Align a fastq file to a genome index using segmehel.
-    """
+rule userdefined_align_to_genomee:
     input:
         "intermediate/Genome/default/{name}/{name}_genome_artificial.fa",
         "data/trimmed/{dir}/{sample}_trimmed.fq",
