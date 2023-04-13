@@ -1,0 +1,3 @@
+WorkflowError in line 2 of /home/garima/Documents/VK/part2_snakmae_With_bed-1/TOOL_rewiring/rules/artificial_genome.smk:
+Workflow defines configfile config/config.yaml but it is not present or accessible.
+  File "/home/garima/Documents/VK/part2_snakmae_With_bed-1/TOOL_rewiring/rules/artificial_genome.smk", line 2, in <module>

@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in rule rRNA_genes_extraction  in line 21 of /home/garima/Documents/VK/part2_snakmae_With_bed-1/TOOL_rewiring/rules/artificial_genome.smk:
+Missing input files for rule rRNA_genes_extraction:
+    output: intermediate/genome/GCF_000001735.4_TAIR10.1_feature_table.txt.bed
+    wildcards: name=GCF_000001735.4_TAIR10.1_feature_table.txt
+    affected files:
+        myscript/NCBI_feature_table/GCF_000001735.4_TAIR10.1_feature_table.txt.txt

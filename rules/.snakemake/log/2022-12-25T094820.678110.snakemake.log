@@ -1,0 +1,3 @@
+WorkflowError in line 1 of /home/garima/Documents/VK/part2_snakmae_With_bed-1/TOOL_rewiring/rules/merged.smk:
+Workflow defines configfile config/config.yaml but it is not present or accessible.
+  File "/home/garima/Documents/VK/part2_snakmae_With_bed-1/TOOL_rewiring/rules/merged.smk", line 1, in <module>

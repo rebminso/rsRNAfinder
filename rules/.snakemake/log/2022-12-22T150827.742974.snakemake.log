@@ -1,0 +1,4 @@
+Building DAG of jobs...
+WildcardError in line 19 of /home/garima/Documents/VK/part2_snakmae_With_bed-1/TOOL_rewiring/rules/artificial_genome.smk:
+Wildcards in input files cannot be determined from output files:
+'name'

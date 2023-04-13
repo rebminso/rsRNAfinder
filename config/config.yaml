@@ -1,0 +1,48 @@
+
+Raw_Read:
+  PATHs: "data/trimmed/*/*.fq"
+
+# -----------------------------------------------------------------------------------------------------------------------------------------
+#                                             STEP-1 : 
+# If you wish to use tool's arabidopsis thaliana coordinates for mapping, set 
+#  => Search_Strategy: "Default" 
+#  => genome_fasta: "path/of/genome/file" 
+#  => species_NCBI_feature_table: "nil"
+#                                                       If you wish to use your genome of interest, kindly change
+#                                                        => Search_strategy: 'nil'
+#                                                        => genome_fasta: "path/of/genome/file"
+#                                                        => species_NCBI_feature_table: "path/of/NCBI/feature/table/ofthe/genome/ofinterest"
+#
+# For more details, kindly go through the usage of rsRNA toolkit as provided in https://github.com/rebminso/rsRNA.git
+# ------------------------------------------------------------------------------------------------------------------------------------------
+reference_genome:
+  Search_strategy: "Default"
+  genome_fasta: "data/Genome/REF_AT.fna"
+  species_NCBI_feature_table: "data/Feature_table/TAIR10.1.txt"
+
+
+
+
+
+
+# -----------------------------------------------------------------------------------------------------------------------------------------
+#                                             STEP-2
+# -----------------------------------------------------------------------------------------------------------------------------------------
+
+# set flank length on either side if required 
+cord_with_flanks:
+  Number: 0
+
+
+# specify the length of rRFs if required
+Define_rRFs_length:
+  min_length: 15
+  max_length: 40
+
+# set maximum number of mismatches in the alignment
+mismatches:
+  max: 3
+
+# RPM threshold
+rpm:
+  threshold: 10
