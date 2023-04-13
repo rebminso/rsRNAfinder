@@ -2,9 +2,6 @@
 #     Alignment of fastq file to indexed genome using segmehel.
 #       """""""""""""""""""""""""""""""""""""""""""""""""""""
 rule align_to_genome:
-    """
-    Align a fastq file to a genome index using segmehel.
-    """
     input:
         "intermediate/Genome/User_defined/{name}/{name}_genome_artificial.fa",
         "data/trimmed/{dir}/{sample}_trimmed.fq",
