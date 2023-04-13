@@ -1,6 +1,6 @@
 
 # rsRNA: rRNA-derived small RNA fragments
-rsRNA, a toolkit for identifying and classifying putative ribosomal RNA-derived RNA fragments (rRFs) that provides a quick and reliable rRNA identification, boosting the exploration of this novel class of non-coding RNAs and their relevance in the living world, including plants. rsRNA categories three series of rRNAs: rRF-5, rRF-3, and rRF-i. The toolkit provides information such as rRNA class, Raw and normalized read count (RPM),	Read length, Progenitor rRNA information (amino acid, anticodon, locus, strand), rRNA sequence. rsRNA is written in Python and Bash, using the snakemake workflow management system to produce reproducible and scalable data analysis. The source code is available at https://github.com/rebminso/rsRNA.git, and is open source, free, and cross-platform compatible (Windows, Linux, MacOS). Installation instructions are provided in the source code package
+rsRNA, a toolkit for identifying and classifying putative ribosomal RNA-derived RNA fragments (rRFs) that provides a quick and reliable rRNA identification, boosting the exploration of this novel class of non-coding RNAs and their relevance in the living world, including plants. rsRNA categories three series of rRNAs: rRF-5, rRF-3, and rRF-i. The toolkit provides information such as rRNA class, Raw and normalized read count (RPM),	Read length, Progenitor rRNA information (locus, strand), rRNA sequence. rsRNA is written in Python and Bash, using the snakemake workflow management system to produce reproducible and scalable data analysis. The source code is available at https://github.com/rebminso/rsRNA.git, and is open source, free, and cross-platform compatible (Windows, Linux, MacOS). Installation instructions are provided below in the README file.
 
 ### Depth indented listing of files
 ```bash this
@@ -52,7 +52,7 @@ Snakemake can best be installed through the [Mamba package manager](https://gith
 
 ```bash
     conda activate base
-    conda env create -f config/env.yml
+    conda env create -f config/environment.yml
     conda activate gtool
 ```
 
@@ -124,20 +124,27 @@ The toolkit has several integrated libraries for quick visualization of the outp
 ## Test run
 **Download and configure rsRNA**
 ```bash
-  git clone ##
-  unzip ##
-  cd ##
+  git clone https://github.com/rebminso/rsRNA.git
+  unzip rsRNA
+  cd rsRNA
   conda activate base
-  conda env create -f config/env.yml
+  conda env create -f config/environment.yml
   conda activate rsRNA
 
 ```
-A test directory containing a test file has been provided in the `/data/trimmed/`. 
 
-### **An example for a using a default genome i.e. *Arabidopisis thaliana***
-**Download Genome file**
+### **An example for using a default genome i.e. *Arabidopisis thaliana***
 
-Download REF_AT.fna from this [link](https://drive.google.com/drive/folders/1Xb2dv9lqj7O3Kvewtx4qed-N6o5UR6wv?usp=share_link) and move it to `/data/Genome/`
+**Download Input and Genome file**
+- A test folder containing an input file is provided in `/data/trimmed/` directory.
+```bash
+  gunzip /data/trimmed/test/*
+```
+
+- Genome file is already provided in `/data/Genome/` directory.
+```bash
+  gunzip /data/Genome/*
+```
 
 **Run the following command to run test sample:**
 
