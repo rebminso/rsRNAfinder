@@ -1,6 +1,6 @@
 
-# rsRNA: rRNA-derived small RNA fragments
-rsRNA, a toolkit for identifying and classifying putative ribosomal RNA-derived RNA fragments (rRFs) that provides a quick and reliable rRNA identification, boosting the exploration of this novel class of non-coding RNAs and their relevance in the living world, including plants. rsRNA categories three series of rRNAs: rRF-5, rRF-3, and rRF-i. The toolkit provides information such as rRNA class, Raw and normalized read count (RPM),	Read length, Progenitor rRNA information (locus, strand), rRNA sequence. rsRNA is written in Python and Bash, using the snakemake workflow management system to produce reproducible and scalable data analysis. The source code is available at [https://github.com/rebminso/rsRNAfinder.git](https://github.com/rebminso/rsRNAfinder.git), and is open source, free, and cross-platform compatible (Windows, Linux, MacOS). Installation instructions are provided below in the README file.
+# rsRNAfinder
+rsRNAfinder identifies and annotates ribosomal RNA-derived small RNAs (rsRNAs), categorizing them into three series: rRF-5, rRF-3, and rRF-i. It provides comprehensive information of identifed rsRNAs including rsRNA category, expression, size, and parent rRNA details (such as locus and strand). Implemented using Python and Bash, rsRNAfinder utilizes the snakemake workflow management system. The source code can be found at [https://github.com/rebminso/rsRNAfinder.git](https://github.com/rebminso/rsRNAfinder.git) and is open source and compatible with multiple platforms, including Windows, Linux, and MacOS. Installation instructions are provided below.
 
 ### Depth indented listing of files
 ```bash this
