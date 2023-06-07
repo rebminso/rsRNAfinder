@@ -1,6 +1,6 @@
 
 # rsRNA: rRNA-derived small RNA fragments
-rsRNA, a toolkit for identifying and classifying putative ribosomal RNA-derived RNA fragments (rRFs) that provides a quick and reliable rRNA identification, boosting the exploration of this novel class of non-coding RNAs and their relevance in the living world, including plants. rsRNA categories three series of rRNAs: rRF-5, rRF-3, and rRF-i. The toolkit provides information such as rRNA class, Raw and normalized read count (RPM),	Read length, Progenitor rRNA information (locus, strand), rRNA sequence. rsRNA is written in Python and Bash, using the snakemake workflow management system to produce reproducible and scalable data analysis. The source code is available at [https://github.com/rebminso/rsRNA.git](https://github.com/rebminso/rsRNAfinder.git), and is open source, free, and cross-platform compatible (Windows, Linux, MacOS). Installation instructions are provided below in the README file.
+rsRNA, a toolkit for identifying and classifying putative ribosomal RNA-derived RNA fragments (rRFs) that provides a quick and reliable rRNA identification, boosting the exploration of this novel class of non-coding RNAs and their relevance in the living world, including plants. rsRNA categories three series of rRNAs: rRF-5, rRF-3, and rRF-i. The toolkit provides information such as rRNA class, Raw and normalized read count (RPM),	Read length, Progenitor rRNA information (locus, strand), rRNA sequence. rsRNA is written in Python and Bash, using the snakemake workflow management system to produce reproducible and scalable data analysis. The source code is available at [https://github.com/rebminso/rsRNAfinder.git](https://github.com/rebminso/rsRNAfinder.git), and is open source, free, and cross-platform compatible (Windows, Linux, MacOS). Installation instructions are provided below in the README file.
 
 ### Depth indented listing of files
 ```bash this
@@ -42,7 +42,7 @@ rsRNA/
 The repository can be downloaded with all the additional dependencies handled by snakemake, provided that snakemake is fully installed and available.
 
 ```bash
-    git clone https://github.com/rebminso/rsRNA.git
+    git clone https://github.com/rebminso/rsRNAfinder.git
     cd rsRNA
 ```
 Snakemake with create one mother folder named rsRNA_toolkit and several others within it. The important files are named “data” and “config.” The config file is the configuration file that will be modified to configure the workflow as per your needs, whereas the data file will allow you to load your input data.
