@@ -53,7 +53,7 @@ Snakemake can best be installed through the [Mamba package manager](https://gith
 ```bash
     conda activate base
     conda env create -f config/environment.yml
-    conda activate gtool
+    conda activate rsRNA
 ```
 
 ### 3. Configure workflow
