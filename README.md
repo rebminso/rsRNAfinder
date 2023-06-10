@@ -124,7 +124,7 @@ The toolkit has several integrated libraries for quick visualization of the outp
 ## Test run
 **Download and configure rsRNA**
 ```bash
-  git clone https://github.com/rebminso/rsRNA.git
+  git clone https://github.com/rebminso/rsRNAfinder.git
   unzip rsRNA
   cd rsRNA
   conda activate base
