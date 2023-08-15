@@ -2,6 +2,9 @@
 # rsRNAfinder
 rsRNAfinder identifies and annotates ribosomal RNA-derived small RNAs (rsRNAs), categorizing them into three series: rRF-5, rRF-3, and rRF-i. It provides comprehensive information of identifed rsRNAs including rsRNA category, expression, size, and parent rRNA details (such as locus and strand). Implemented using Python and Bash, rsRNAfinder utilizes the snakemake workflow management system. The source code can be found at [https://github.com/rebminso/rsRNAfinder.git](https://github.com/rebminso/rsRNAfinder.git) and is open source and compatible with multiple platforms, including Windows, Linux, and MacOS. Installation instructions are provided below.
 
+![workflow_rrf](https://github.com/rebminso/rsRNAfinder/assets/85422585/7a0c61f5-b5b4-4266-8cac-4480aa7b2e9d)
+
+
 ### Depth indented listing of files
 ```bash this
 rsRNA/
@@ -45,7 +48,7 @@ The repository can be downloaded with all the additional dependencies handled by
     git clone https://github.com/rebminso/rsRNAfinder.git
     cd rsRNA
 ```
-Snakemake with create one mother folder named rsRNA_toolkit and several others within it. The important files are named “data” and “config.” The config file is the configuration file that will be modified to configure the workflow as per your needs, whereas the data file will allow you to load your input data.
+Snakemake will create one mother folder named rsRNA and several others within it. The important files are named “data” and “config.” The config file is the configuration file that will be modified to configure the workflow as per your needs, whereas the data file will allow you to load your input data.
 
 ### 2. Install Snakemake
 Snakemake can best be installed through the [Mamba package manager](https://github.com/mamba-org/mamba). The latest version of snakemake==7.20.0 is required to run the workflow. The installation instructions for snakemake can be found in their [documentation](https://snakemake.readthedocs.io/en/stable/), but briefly, if conda and mamba are already installed, snakemake can be installed with the following command:
@@ -57,20 +60,20 @@ Snakemake can best be installed through the [Mamba package manager](https://gith
 ```
 
 ### 3. Configure workflow
-The configuration of the workflow can be altered by modifying the `config/config.yaml` file, following the explanations provided in the file. 	
+The configuration of the workflow can be altered by modifying the `config/config.yaml` file, following the explainations provided in the file. 	
 
-1. If Arabidopsis thaliana is desired to be used as the reference genome, no alteration of the config file will be necessary. 
+1. If Arabidopsis thaliana is desired to be used as the reference genome, no alteration in the config file will be required. 
  	
-- A folder containing trimmed FASTQ files can be added to the `data/trimmed/` directory, with the input fastq filename being required to be in the format of {xyz}_trimmed.fq, such as `SRR2354321_trimmed.fq`. The `Search strategy` in the config file is set to `Default`. 
+- A folder containing trimmed FASTQ files can be added to the `data/trimmed/` directory, with the input fastq filename being required to be in the format of {xyz}_trimmed.fq, such as `SRR2354321_trimmed.fq`. The `Search strategy` in the config file is to be set to `Default`. 
 
 The flank length, minimum and maximum rRFs sequence length, maximum number of mismatches in the alignment, and maximum RPM threshold for rRFs can be changed according to requirements in the config file. 
 
 2. If a different genome is desired to be used, the config file will need to be modified.
 
 - A folder containing trimmed FASTQ files are to be added to the `data/trimmed/` directory.
-- It should be noted that the input fastq format must be in the {xyz}_trimmed.fq format, for example `SRR2354321_trimmed.fq`.
+- It should be noted that the input fastq file format must be in the {xyz}_trimmed.fq format, for example `SRR2354321_trimmed.fq`.
 - The FASTA sequence of the desired reference genome is to be added to `data/Genome/`.
-- The genome feature table in txt format is to be added to `data/Feature_table/`.
+- The genome feature table in .txt format is to be added to `data/Feature_table/`.
 
 It should be noted that the feature table and reference genome must be from NCBI. Once all three types of files have been added to their respective directories, the changes in the `config/config.yaml` file must be performed, with the setting specified.
 - Search strategy: `Host`
@@ -109,6 +112,8 @@ RPM| This is the ratio of the reads supporting the rRFs to the total number of s
 uniq_seq_count| This measures the count of each mapping sequence to the rRNA. 
 
 b).	`.html`: This presents the data on a webpage. The abundant rRFs from individual genomic locations are considered and the count of all mapped reads is kept in the creation of the HTML file from the above CSV file with an additional column of dot-bracket notation. The reads supporting the rRFs are divided by the total number of single sRNA seq and then multiplying with 1 million to normalize the rRF abundance to RPM.  
+![html](https://github.com/rebminso/rsRNAfinder/assets/85422585/597ffab0-b797-4be9-8318-a10f1f36659e)
+
 
 c).	A `.tsv` file with two columns showing the count of occurrence of each rRF class in the sample.
 |  Column  |  Description  |
@@ -117,9 +122,10 @@ c).	A `.tsv` file with two columns showing the count of occurrence of each rRF c
 
 d).	An eight-column file for abundance statistics summarizes the most abundant rRFs in all rRNA.
 
-The toolkit has several integrated libraries for quick visualization of the output from each sample. These plots will provide a better representation of the distribution of the results, including a [pie plot](https://drive.google.com/file/d/14IytEnGqT0xtO4c6GagGpOnDsEGf3Dwe/view) showing the overall distribution of rRFs, a [bar plot](https://drive.google.com/file/d/18qPxfGAdOv85YZzMxoQp3vO8XE2gomiz/view) displaying the length distribution of all three rRFs, and two [box](https://drive.google.com/file/d/133PqGHTAt91ipc2BP2ldv2yxeRoGKsST/view) [plots](https://drive.google.com/file/d/1uNu-iISuWUWTEyGv0EpQmktVHtchxh4k/view) presenting the distribution of different categories of rRFs with different rRNA classes based on RPM.  
+The toolkit has several integrated libraries for quick visualization of the output from each sample. These plots will provide a better representation of the distribution of the results, including a [pie plot](https://drive.google.com/file/d/14IytEnGqT0xtO4c6GagGpOnDsEGf3Dwe/view), [bar plot](https://drive.google.com/file/d/18qPxfGAdOv85YZzMxoQp3vO8XE2gomiz/view), and two [box](https://drive.google.com/file/d/133PqGHTAt91ipc2BP2ldv2yxeRoGKsST/view) [plots](https://drive.google.com/file/d/1uNu-iISuWUWTEyGv0EpQmktVHtchxh4k/view).  
 
-
+![result](https://github.com/rebminso/rsRNAfinder/assets/85422585/1816295e-977b-44bb-8cd3-922d1daa0bac)
+Above figure shows (A) Barplot displaying the length distribution within different categories of rRFs.(B)  Pie chart providing a comprehensive view of the overall distribution of rRF categories (C) Boxplot representing average abundance of different rRNA classes across distinct categories of rRFs. (D) Boxplot illustrating the average abundance of nuclear, chloroplast, and mitochondrial rRNAs for each category of rRFs 
 
 ## Test run
 **Download and configure rsRNA**
