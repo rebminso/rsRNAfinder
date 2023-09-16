@@ -99,17 +99,18 @@ a).	A `.csv` file with information on the rRF findings, including details on the
 
 | **Columns**     | **Description**      | 
 | ------------- | ------------  |
-| Category    | This indicates the class of rRFs based on the mapping position of the read on the genome.     |
-| rRNA_info    | This provides general rRNA information such as parental coordinates and chromosome number.    |
+| Category    | This indicates the class of rRFs based on the mapping position of the read on the genome.|
+| rRNA_info    | This provides general rRNA information such as parental coordinates and chromosome number.|
 |Gene_Start| This shows the coordinate where the first base of the read maps to with respect to the gene. |
 |Gene End | This shows the coordinate where the last base of the read maps to with respect to the gene.|
-Sequence |  This shows the mapped nucleotide sequence.|
-Length|This shows the length of the mapped bases|
-Genomic Start| This shows the coordinate where the first base of the read maps to with respect to the genomic position.|
-Genomic End |This shows the coordinate where the first base of the read maps to with respect to the genomic position. |
-Difference | This indicates a sum of total number of mismatches, insertions, and differences in the mapped sequence.
-RPM| This is the ratio of the reads supporting the rRFs to the total number of small RNA sequences.|
-uniq_seq_count| This measures the count of each mapping sequence to the rRNA. 
+|Sequence |  This shows the mapped nucleotide sequence.|
+|Length|This shows the length of the mapped bases|
+|Genomic Start| This shows the coordinate where the first base of the read maps to with respect to the genomic position.|
+|Genomic End |This shows the coordinate where the first base of the read maps to with respect to the genomic position. |
+|Difference | This indicates a sum of total number of mismatches, insertions, and differences in the mapped sequence.|
+|RPM| This is the ratio of the reads supporting the rRFs to the total number of small RNA sequences.|
+|uniq_seq_count| This measures the count of each unique sequence mapping to each genomic locus. |
+|seq_count| This measures the count of reads mapping exactly to the same genomic locus with some differences allowed.|
 
 b).	`.html`: This presents the data on a webpage. The abundant rRFs from individual genomic locations are considered and the count of all mapped reads is kept in the creation of the HTML file from the above CSV file with an additional column of dot-bracket notation. The reads supporting the rRFs are divided by the total number of single sRNA seq and then multiplying with 1 million to normalize the rRF abundance to RPM.  
 ![html](https://github.com/rebminso/rsRNAfinder/assets/85422585/597ffab0-b797-4be9-8318-a10f1f36659e)
