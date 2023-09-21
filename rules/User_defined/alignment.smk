@@ -1,5 +1,5 @@
 #       """""""""""""""""""""""""""""""""""""""""""""""""""""
-#     Alignment of fastq file to indexed genome using segmehel.
+#     Alignment of fastq file to indexed genome using segemehl
 #       """""""""""""""""""""""""""""""""""""""""""""""""""""
 rule align_to_genome:
     input:
@@ -7,7 +7,7 @@ rule align_to_genome:
         "data/trimmed/{dir}/{sample}_trimmed.fq",
         "intermediate/SAM/{name}/{name}_genome_indexed.idx"
     output:
-        temp("intermediate/SAM/{name}/{dir}/{sample}/{sample}_trimmed.sam")
+        "intermediate/SAM/{name}/{dir}/{sample}/{sample}_trimmed.sam"
 
     shell:
         """
