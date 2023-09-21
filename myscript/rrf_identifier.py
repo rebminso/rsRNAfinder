@@ -1,6 +1,7 @@
 #       """""""""""""""""""""""""""""""""""""""""""""""""""""
 #        Identification and Classification of rRFs.
 #       """""""""""""""""""""""""""""""""""""""""""""""""""""
+
 import re
 import pandas as pd
 import glob, os
@@ -35,9 +36,9 @@ del semi_Tab_list
 semi_tab[['Sampleid','rRNA_info','Gene_Start','Length','Sequence','info']] = semi_tab['title'].str.extract(r'(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)')
 semi_tab = semi_tab.drop(['title'],axis=1)
 
-#per-million factor
+# per-million factor
 Total_Sample = len(pd.unique(semi_tab['Sampleid']))
-Per_million_factor = (Total_Sample)/(10**6)
+Per_million_factor = round((Total_Sample)/(10**6),5)
 semi_tab = semi_tab.loc[(semi_tab['rRNA_info'].str.contains('rRNA',regex=True))].reset_index(drop=True)
 semi_tab[['genomicS','genomicE','strand']]=semi_tab['rRNA_info'].str.extract(':([0-9].*)-([0-9].*)\((.*)\)')
 semi_tab=semi_tab.fillna(0)
@@ -47,33 +48,31 @@ semi_tab['Genomic_End'] = semi_tab['Genomic_Start'] + semi_tab['Length'] -1
 semi_tab['Gene_End'] = semi_tab['Gene_Start'] + semi_tab['Length']
 semi_tab = semi_tab.astype({'Genomic_Start':'int','Genomic_End':'int','genomicE':'int'})
 
-tab = semi_tab[['Genomic_Start','Genomic_End']].value_counts()
-tab = pd.DataFrame(tab).reset_index()
-tab.columns = ['Genomic_Start','Genomic_End','Count']
-merged_table = pd.merge(semi_tab,tab,on=['Genomic_Start','Genomic_End'])
-del tab
-del semi_tab
-merged_table['Difference'] = merged_table['info'].str.extract(r'NM:i:(.*)')
-merged_table = merged_table.drop(['info'],axis=1)
-merged_table = merged_table.astype({'Difference':'int'})
-values_sorted = merged_table.loc[(merged_table['Difference']<int(args.mismatch))]
-del merged_table
+if semi_tab.shape[0] > 0:
+    tab = semi_tab.groupby(['Genomic_Start', 'Genomic_End']).size().reset_index(name='Count')
+    merged_table = pd.merge(semi_tab, tab, on=['Genomic_Start', 'Genomic_End'])
+    del tab
+    del semi_tab 
+    merged_table['Difference'] = merged_table['info'].str.extract(r'NM:i:(.*)')
+    merged_table = merged_table.drop(['info'],axis=1)
+    merged_table = merged_table.astype({'Difference':'int'})
+    values_sorted = merged_table.loc[(merged_table['Difference']<int(10))]
+    del merged_table
+
+    # classification
+    first = 1
+    values_sorted.loc[(values_sorted['Genomic_Start'] <= (values_sorted['genomicS']+first)),'Category'] = 'rRF-5'
+    values_sorted.loc[(values_sorted['Genomic_End'] >= (values_sorted['genomicE']-first)),'Category'] = 'rRF-3'
+    values_sortedle = values_sorted.fillna('rRF-i')
+    values_sortedle['RPM'] = (values_sortedle['Count']/Per_million_factor).round(3)
+    del values_sorted
+    values_sortedle = values_sortedle[['Category','rRNA_info','Gene_Start','Gene_End','Sequence','Length','Genomic_Start','Genomic_End','Difference','Count','RPM']]
+    values_sortedle2 = values_sortedle.loc[(values_sortedle['Length'] >= args.min) & (values_sortedle['Length'] <= args.max)]
+    values_sortedle2 = values_sortedle2.loc[(values_sortedle2['RPM']>int(args.rpm))]
+    values_sortedle2.to_csv(args.classify, index=False, sep='\t')
+    del values_sortedle
+    del values_sortedle2
 
 
-# classification
-first = 1
-values_sorted.loc[(values_sorted['Genomic_Start'] <= (values_sorted['genomicS']+first)),'Category'] = 'rRF-5'
-values_sorted.loc[(values_sorted['Genomic_End'] >= (values_sorted['genomicE']-first)),'Category'] = 'rRF-3'
-values_sortedle = values_sorted.fillna('rRF-i')
-values_sortedle['RPM'] = values_sortedle['Count']/Per_million_factor
-del values_sorted
-values_sortedle = values_sortedle[['Category','rRNA_info','Gene_Start','Gene_End','Sequence','Length','Genomic_Start','Genomic_End','Difference','Count','RPM']]
-values_sortedle2 = values_sortedle.loc[(values_sortedle['Length'] >= args.min) & (values_sortedle['Length'] <= args.max)]
-values_sortedle2 = values_sortedle2.loc[(values_sortedle2['RPM']>int(args.rpm))]
-
-
-
-values_sortedle2.to_csv(args.classify, index=False, sep='\t')
-del values_sortedle
-del values_sortedle2
-
+else:
+    print("No rRNAs in the given scRNA paired-end data to classify and save")
