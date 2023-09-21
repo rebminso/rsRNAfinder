@@ -9,8 +9,13 @@ rule rRNA_genes_extraction:
     output:
         "intermediate/Genome/User_defined/{name}/{name}.bed"
     shell:
-        "cat {input} | grep 'S ribosomal RNA' | cut -f6,8,9,10,14 > {output};"
-        "sed -i s'/^/chr/g ;s/ //g ;s/ribosomalRNA/_rRNA/g' {output};"
+        """
+        cat {input} |
+        grep 'S ribosomal RNA' |
+        cut -f6,8,9,10,14 |
+        sed 's/^/chr/g; s/ //g; s/ribosomalRNA/_rRNA/g' |
+        grep -v -w 'chr' > {output}
+        """ 
 
 rule dot_column:
     input:
