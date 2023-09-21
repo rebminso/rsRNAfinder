@@ -18,7 +18,7 @@ rule classification:
         diff=config['mismatches']['max'],
         rpm=config['rpm']['threshold']
     shell:
-        "python {input.script} {input.i1} -m {params.min} -M {params.max} {output.o1} {params.diff} {params.rpm}"
+        "python3 {input.script} {input.i1} -m {params.min} -M {params.max} {output.o1} {params.diff} {params.rpm}"
 
 rule filtering_csv:
     input:
@@ -31,7 +31,7 @@ rule filtering_csv:
     threads:
         8
     shell:
-        "python {input.script} {input.i1} {output.o1} {output.o2} {output.o3}"
+        "python3 {input.script} {input.i1} {output.o1} {output.o2} {output.o3}"
 
 rule tsv:
     input:
@@ -40,7 +40,7 @@ rule tsv:
     output:
         "results/{name}/{dir}/{sample}/{sample}_filtered.tsv"
     shell:
-        "python {input.script} {input.i1} {output}"
+        "python3 {input.script} {input.i1} {output}"
 
 
 rule piplot:
@@ -57,7 +57,7 @@ rule piplot:
 
     shell:
         """
-        python {input.script} {input.i1} {output.pie} {input.bar} {output.bar} {input.bar2} {output.box_All} {output.box_chr}
+        python3 {input.script} {input.i1} {output.pie} {input.bar} {output.bar} {input.bar2} {output.box_All} {output.box_chr}
         """
 
 rule vienna:
@@ -68,7 +68,7 @@ rule vienna:
        temp("results/{name}/{dir}/{sample}/{sample}_seq_list.txt")
     shell:
         """
-        python {input.i2} {input.i1} {output}
+        python3 {input.i2} {input.i1} {output}
         """
 
 rule get_notation:
@@ -88,7 +88,7 @@ rule final_table:
         temp("results/{name}/{dir}/{sample}/{sample}_filtered_TABLE.csv")
     shell:
         """
-        python {input.myscript} {input.i2} {input.i1} {output} 
+        python3 {input.myscript} {input.i2} {input.i1} {output} 
         """
 
 rule html:
@@ -98,4 +98,4 @@ rule html:
     output:
         "results/{name}/{dir}/{sample}/{sample}_filtered.html"
     shell:
-        "python {input.script} {input.i1} {output}"
+        "python3 {input.script} {input.i1} {output}"
