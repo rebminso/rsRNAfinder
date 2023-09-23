@@ -46,9 +46,10 @@ The repository can be downloaded with all the additional dependencies handled by
 
 ```bash
     git clone https://github.com/rebminso/rsRNAfinder.git
-    cd rsRNA
+    cd rsRNAfinder
 ```
-Snakemake will create one mother folder named rsRNA and several others within it. The important files are named “data” and “config.” The config file is the configuration file that will be modified to configure the workflow as per your needs, whereas the data file will allow you to load your input data.
+The repository has a primary directory named &quot;rsRNAfinder&quot; with several
+subfolders. The important files are named “data” and “config.” The config file is the configuration file that is modified to configure the workflow as per the needs, whereas the data file allows you to load your input data.
 
 ### 2. Install Snakemake
 Snakemake can best be installed through the [Mamba package manager](https://github.com/mamba-org/mamba). The latest version of snakemake==7.20.0 is required to run the workflow. The installation instructions for snakemake can be found in their [documentation](https://snakemake.readthedocs.io/en/stable/), but briefly, if conda and mamba are already installed, snakemake can be installed with the following command:
@@ -58,6 +59,24 @@ Snakemake can best be installed through the [Mamba package manager](https://gith
     conda env create -f config/environment.yml
     conda activate rsRNA
 ```
+OR
+
+Manually install the following dependencies to create an environment and load packages through the command line as shown below:
+```bash
+    conda activate base
+    conda create -n rsRNA python=3.7 --no-default-packages
+    conda activate rsRNA
+    pip install snakemake==7.20.0
+    conda install -c bioconda bedtools
+    pip install seaborn
+    conda install -c conda-forge matplotlib
+    conda install -c bioconda segemehl 
+    conda install -c bioconda samtools
+    conda install -c conda-forge biopython
+    conda install -c bioconda viennarna
+
+```
+
 
 ### 3. Configure workflow
 The configuration of the workflow can be altered by modifying the `config/config.yaml` file, following the explainations provided in the file. 	
@@ -66,7 +85,7 @@ The configuration of the workflow can be altered by modifying the `config/config
  	
 - A folder containing trimmed FASTQ files can be added to the `data/trimmed/` directory, with the input fastq filename being required to be in the format of {xyz}_trimmed.fq, such as `SRR2354321_trimmed.fq`. The `Search strategy` in the config file is to be set to `Default`. 
 
-The flank length, minimum and maximum rRFs sequence length, maximum number of mismatches in the alignment, and maximum RPM threshold for rRFs can be changed according to requirements in the config file. 
+The flank length, minimum and maximum rRFs sequence length, maximum number of mismatches in the alignment, and maximum RPM threshold for rRFs can be changed according to requirements from the config file. 
 
 2. If a different genome is desired to be used, the config file will need to be modified.
 
@@ -75,20 +94,20 @@ The flank length, minimum and maximum rRFs sequence length, maximum number of mi
 - The FASTA sequence of the desired reference genome is to be added to `data/Genome/`.
 - The genome feature table in .txt format is to be added to `data/Feature_table/`.
 
-It should be noted that the feature table and reference genome must be from NCBI. Once all three types of files have been added to their respective directories, the changes in the `config/config.yaml` file must be performed, with the setting specified.
+It should be noted that the feature table and reference genome must be from NCBI. Once all three types of files are added to their respective directories, the changes in the `config/config.yaml` file must be performed, with the setting specified.
 - Search strategy: `Host`
 - genome_fasta: `path/of/genome/file`
 - species_NCBI_feature_table: `path/of/NCBI/feature/table/ofthe/genome/ofinterest`
 
-Further changes to the flank length, minimum and maximum rRFs sequence length, the maximum number of mismatches in the alignment, and the maximum RPM threshold for rRFs can be made in the config file as required.
+Further changes to the flank length, minimum and maximum rRFs sequence length, the maximum number of mismatches in the alignment, and the maximum RPM threshold for rRFs can be made in the config file as required. Please ensure that the headers in the genome file are correctly formatted. Specifically, each fasta header for genomic sequences should begin with >chr[Num]. Meanwhile, headers for mitochondrial and plastid sequences should be written as 'chrMt' and 'chrPt,' respectively.
 
 ### 4. Run workflow
-The workflow can be executed after proper configuration and deployment, with the current working directory being set to `~./rsRNA/`. To run, the following command should be executed:
+The workflow can be executed after proper configuration and deployment, with the current working directory set to `~./rsRNAfinder/`. To run, the following command should be executed:
 
 ```bash
     snakemake --cores 8 -q
 ```
-The `--dryrun` or `-n` option allows you to see the scheduling plan including the assigned priorities. The main Snakefile in the `~./rsRNA/` directory will be automatically detected by snakemake and all the steps will be executed. Number of cores can also be increased. 
+The `--dryrun` or `-n` option allows you to see the scheduling plan including the assigned priorities. The main Snakefile in the `~./rsRNAfinder/` directory will be automatically detected by snakemake and all the steps will be executed. Number of cores can also be increased. 
 
 ## Results
 The `intermediate/` and `result/` directories will be generated in the current working directory, with the intermediate directory containing the intermediate files generated during processing and the results directory containing the output files. A separate folder will be created for each input sample and stored inside a directory named after the input reference genome.
@@ -132,29 +151,68 @@ Above figure shows (A) Barplot displaying the length distribution within differe
 **Download and configure rsRNA**
 ```bash
   git clone https://github.com/rebminso/rsRNAfinder.git
-  unzip rsRNA
-  cd rsRNA
+  unzip rsRNAfinder
+  cd rsRNAdinder
   conda activate base
   conda env create -f config/environment.yml
   conda activate rsRNA
 
 ```
 
-### **An example for using a default genome i.e. *Arabidopisis thaliana***
+### **An example using a default genome i.e. *Arabidopisis thaliana***
 
 **Download Input and Genome file**
-- A test folder containing an input file is provided in `/data/trimmed/` directory.
+- A test folder containing an input file is provided in `data/trimmed/` directory.
 ```bash
-  gunzip /data/trimmed/test/*
+  gunzip data/trimmed/test/*
 ```
 
-- Genome file is already provided in `/data/Genome/` directory.
+- Genome file is already provided in `data/Genome/` directory.
 ```bash
-  gunzip /data/Genome/*
+  gunzip data/Genome/*
 ```
 
 **Run the following command to run test sample:**
 
+```bash
+  snakemake --cores 8 -q
+```
+-q can be replaced with -npr to perform a dry-run.
+
+### **An example using any other genome** 
+**Download Input and Genome file of interest**
+```bash
+cd data/trimmed
+mkdir newfq
+cd newfq
+fastq-dump SRR24973537
+cd ../../Genome/
+wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/plant/Brassica_rapa/latest_assembly_versions/GCF_000309985.2_CAAS_Brap_v3.01/GCF_000309985.2_CAAS_Brap_v3.01_genomic.fna.gz
+gunzip *
+mv GCF_000309985.2_CAAS_Brap_v3.01_genomic.fna brap_ref.fna
+```
+- Genome fasta header should start with '>chr[Num]'. Mitochondrial and plastid fasta headers also should be as chrMt & chrPt respectively.
+
+**Download Feature table file of interest**
+```bash
+cd ../
+mkdir Feature_table
+cd Feature_table
+wget https://ftp.ncbi.nlm.nih.gov/genomes/refseq/plant/Brassica_rapa/latest_assembly_versions/GCF_000309985.2_CAAS_Brap_v3.01/GCF_000309985.2_CAAS_Brap_v3.01_feature_table.txt.gz
+gunzip *
+mv GCF_000309985.2_CAAS_Brap_v3.01_feature_table.txt Brap.txt
+```
+
+
+**Changes the Config file**
+
+```bash
+reference_genome:
+  Search_strategy: "Host"
+  genome_fasta: "data/Genome/brap_ref.fna"
+  species_NCBI_feature_table: "data/Feature_table/Brap.txt"
+  ```
+Return to the rsRNAfinder directory and execute the following command to run the test sample:
 ```bash
   snakemake --cores 8 -q
 ```
@@ -170,6 +228,9 @@ Above figure shows (A) Barplot displaying the length distribution within differe
 #### 2. IncompleteFilesException: The files below seem to be incomplete.
 
 `snakemake --cores 8 -q --ri`
+
+#### 3. Automate removal of SAM file 
+Change `"intermediate/SAM/{name}/{dir}/{sample}/{sample}_trimmed.sam"` to ` temp("intermediate/SAM/{name}/{dir}/{sample}/{sample}_trimmed.sam") ` in `rsRNAfinder/rules/default_smk/alignment_default.smk` file.
 
 
 ## Authors
