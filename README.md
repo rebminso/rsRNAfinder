@@ -1,6 +1,6 @@
 
 # rsRNAfinder
-rsRNAfinder identifies and annotates ribosomal RNA-derived small RNAs (rsRNAs), categorizing them into three series: rRF-5, rRF-3, and rRF-i. It provides comprehensive information of identifed rsRNAs including rsRNA category, expression, size, and parent rRNA details (such as locus and strand). Implemented using Python and Bash, rsRNAfinder utilizes the snakemake workflow management system. The source code can be found at [https://github.com/rebminso/rsRNAfinder.git](https://github.com/rebminso/rsRNAfinder.git) and is open source and compatible with multiple platforms, including Windows, Linux, and MacOS. Installation instructions are provided below.
+rsRNAfinder identifies and annotates ribosomal RNA-derived small RNAs (rsRNAs), categorizing them into three series: rRF-5, rRF-3, and rRF-i. It provides comprehensive information of identifed rsRNAs including rsRNA category, expression, size, and parent rRNA details (such as locus and strand). Implemented using Python and Bash, rsRNAfinder utilizes the snakemake workflow management system. The source code can be found at [https://github.com/rebminso/rsRNAfinder.git](https://github.com/rebminso/rsRNAfinder.git) and is open source and compatible with multiple platforms. Installation instructions are provided below.
 
 ![workflow_rrf](https://github.com/rebminso/rsRNAfinder/assets/85422585/7a0c61f5-b5b4-4266-8cac-4480aa7b2e9d)
 
@@ -70,7 +70,7 @@ Manually install the following dependencies to create an environment and load pa
     conda install -c bioconda bedtools
     pip install seaborn
     conda install -c conda-forge matplotlib
-    conda install -c bioconda segemehl 
+    conda install -c bioconda segemehl==0.2.0 
     conda install -c bioconda samtools
     conda install -c conda-forge biopython
     conda install -c bioconda viennarna
@@ -81,16 +81,16 @@ Manually install the following dependencies to create an environment and load pa
 ### 3. Configure workflow
 The configuration of the workflow can be altered by modifying the `config/config.yaml` file, following the explainations provided in the file. 	
 
-1. If Arabidopsis thaliana is desired to be used as the reference genome, no alteration in the config file will be required. 
+1. If Arabidopsis thaliana is to be used as the reference genome, no alteration in the config file will be required. 
  	
-- A folder containing trimmed FASTQ files can be added to the `data/trimmed/` directory, with the input fastq filename being required to be in the format of {xyz}_trimmed.fq, such as `SRR2354321_trimmed.fq`. The `Search strategy` in the config file is to be set to `Default`. 
+- A folder containing trimmed FASTQ files can be added to the `data/trimmed/` directory, with the input fastq filename required to be in the format of {xyz}_trimmed.fq, such as `SRR2354321_trimmed.fq`. The `Search strategy` in the config file is to be set to `Default`. 
 
-The flank length, minimum and maximum rRFs sequence length, maximum number of mismatches in the alignment, and maximum RPM threshold for rRFs can be changed according to requirements from the config file. 
+Flank length, minimum and maximum rRFs sequence length, maximum number of mismatches in the alignment, and maximum RPM threshold for rRFs can be changed according to requirements in the config file. 
 
-2. If a different genome is desired to be used, the config file will need to be modified.
+2. If a different genome is desired, the config file will need to be modified.
 
-- A folder containing trimmed FASTQ files are to be added to the `data/trimmed/` directory.
-- It should be noted that the input fastq file format must be in the {xyz}_trimmed.fq format, for example `SRR2354321_trimmed.fq`.
+- A folder containing trimmed FASTQ files is to be added to the `data/trimmed/` directory.
+- It should be noted that the input fastq file format must be in the {xyz}_trimmed.fq format, for example, `SRR2354321_trimmed.fq`.
 - The FASTA sequence of the desired reference genome is to be added to `data/Genome/`.
 - The genome feature table in .txt format is to be added to `data/Feature_table/`.
 
@@ -107,7 +107,7 @@ The workflow can be executed after proper configuration and deployment, with the
 ```bash
     snakemake --cores 8 -q
 ```
-The `--dryrun` or `-n` option allows you to see the scheduling plan including the assigned priorities. The main Snakefile in the `~./rsRNAfinder/` directory will be automatically detected by snakemake and all the steps will be executed. Number of cores can also be increased. 
+The `--dryrun` or `-n` option allows you to see the scheduling plan, including the assigned priorities. The main Snakefile in the `~./rsRNAfinder/` directory will be automatically detected by snakemake and all the steps will be executed. Number of cores can also be increased. 
 
 ## Results
 The `intermediate/` and `result/` directories will be generated in the current working directory, with the intermediate directory containing the intermediate files generated during processing and the results directory containing the output files. A separate folder will be created for each input sample and stored inside a directory named after the input reference genome.
@@ -118,18 +118,18 @@ a).	A `.csv` file with information on the rRF findings, including details on the
 
 | **Columns**     | **Description**      | 
 | ------------- | ------------  |
-| Category    | This indicates the class of rRFs based on the mapping position of the read on the genome.|
-| rRNA_info    | This provides general rRNA information such as parental coordinates and chromosome number.|
-|Gene_Start| This shows the coordinate where the first base of the read maps to with respect to the gene. |
-|Gene End | This shows the coordinate where the last base of the read maps to with respect to the gene.|
-|Sequence |  This shows the mapped nucleotide sequence.|
-|Length|This shows the length of the mapped bases|
-|Genomic Start| This shows the coordinate where the first base of the read maps to with respect to the genomic position.|
-|Genomic End |This shows the coordinate where the first base of the read maps to with respect to the genomic position. |
-|Difference | This indicates a sum of total number of mismatches, insertions, and differences in the mapped sequence.|
-|RPM| This is the ratio of the reads supporting the rRFs to the total number of small RNA sequences.|
-|uniq_seq_count| This measures the count of each unique sequence mapping to each genomic locus. |
-|seq_count| This measures the count of reads mapping exactly to the same genomic locus with some differences allowed.|
+| Category    | class of rRFs based on the mapping position of the read on the genome.|
+| rRNA_info    | general rRNA information such as parental coordinates and chromosome number.|
+|Gene_Start| coordinate where the first base of the read maps to with respect to the gene. |
+|Gene End | coordinate where the last base of the read maps to with respect to the gene.|
+|Sequence | mapped nucleotide sequence.|
+|Length|length of the mapped bases|
+|Genomic Start|coordinate where the first base of the read maps to with respect to the genomic position.|
+|Genomic End |coordinate where the first base of the read maps to with respect to the genomic position. |
+|Difference |sum of total number of mismatches, insertions, and differences in the mapped sequence.|
+|RPM| ratio of the reads supporting the rRFs to the total number of small RNA sequences.|
+|Seq_count| count of each unique sequence mapping to each genomic locus. |
+|count| count of reads mapping exactly to the same genomic locus with some differences allowed.|
 
 b).	`.html`: This presents the data on a webpage. The abundant rRFs from individual genomic locations are considered and the count of all mapped reads is kept in the creation of the HTML file from the above CSV file with an additional column of dot-bracket notation. The reads supporting the rRFs are divided by the total number of single sRNA seq and then multiplying with 1 million to normalize the rRF abundance to RPM.  
 ![html](https://github.com/rebminso/rsRNAfinder/assets/85422585/597ffab0-b797-4be9-8318-a10f1f36659e)
@@ -138,7 +138,7 @@ b).	`.html`: This presents the data on a webpage. The abundant rRFs from individ
 c).	A `.tsv` file with two columns showing the count of occurrence of each rRF class in the sample.
 |  Column  |  Description  |
 |----------|---------------|
-|  rRF category  | This shows the total count of each category of rRFs |
+|  rRF category  | total count of each category of rRFs |
 
 d).	An eight-column file for abundance statistics summarizes the most abundant rRFs in all rRNA.
 
@@ -152,7 +152,7 @@ Above figure shows (A) Barplot displaying the length distribution within differe
 ```bash
   git clone https://github.com/rebminso/rsRNAfinder.git
   unzip rsRNAfinder
-  cd rsRNAdinder
+  cd rsRNAfinder
   conda activate base
   conda env create -f config/environment.yml
   conda activate rsRNA
@@ -218,7 +218,7 @@ Return to the rsRNAfinder directory and execute the following command to run the
 ```
 -q can be replaced with -npr to perform a dry-run.
 
-## FAQ
+## FAQs
 
 #### 1.  error while loading shared libraries: libncurses.so.5: cannot open shared object file:
 
