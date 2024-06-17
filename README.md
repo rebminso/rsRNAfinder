@@ -238,3 +238,10 @@ Change `"intermediate/SAM/{name}/{dir}/{sample}/{sample}_trimmed.sam"` to ` temp
 - [@GarimaKalakoti](https://github.com/rebminso)
 - gkalakoti@nipgr.ac.in
 
+If you have any questions, bug reports, or suggestions, please contact:
+
+**Dr. Shailesh Kumar**  
+Staff Scientist, Bioinformatics Laboratory #202  
+National Institute of Plant Genome Research (NIPGR), New Delhi  
+Email: [shailesh@nipgr.ac.in](mailto:shailesh@nipgr.ac.in)
+
